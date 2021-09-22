@@ -17,18 +17,10 @@ public final class GameCoParser extends AbstractParser {
 
 	@Override
 	protected String parseDocument(Document document) {
-		Element element = document.select("ul.mint > li.price").first();
+		Element element = document.select("strong.btnPrice").first();
 
 		if (element != null) {
-			String[] parts = element.text().split("\\s", 2);
-
-			if (parts.length == 1) {
-				return parts[0];
-			}
-
-			if (parts.length == 2) {
-				return parts[1];
-			}
+			return element.text().strip();
 		}
 
 		return null;

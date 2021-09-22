@@ -18,21 +18,10 @@ public final class AmazonParser extends AbstractParser {
 
 	@Override
 	protected String parseDocument(Document document) {
-		Element element = document.select(
-				"table.product > tbody > tr > td > b.priceLarge").first();
+		Element element = document.select("#priceblock_ourprice").first();
 
 		if (element != null) {
-			String[] parts = element.text().split("\\s", 2);
-
-			if (parts.length == 1) {
-				return parts[0];
-			}
-
-			if (parts.length == 2) {
-				price = new PriceInfo(parts[0]);
-
-				return parts[1];
-			}
+			return element.text().strip();
 		}
 
 		return null;

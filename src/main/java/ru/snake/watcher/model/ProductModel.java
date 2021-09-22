@@ -11,8 +11,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 @SuppressWarnings("serial")
-public final class ProductModel extends AbstractTableModel implements
-		AbstractProductModel {
+public final class ProductModel extends AbstractTableModel implements AbstractProductModel {
 	private static final String PRODUCT_LIST_FILE = "productlist.txt";
 
 	private List<ProductInfo> productInfo;
@@ -72,8 +71,7 @@ public final class ProductModel extends AbstractTableModel implements
 			if (price > 0.01f) {
 				String result;
 
-				result = String.format(pi.getPriceInfo().getHTMLCurrency(),
-						price);
+				result = String.format(pi.getPriceInfo().getHTMLCurrency(), price);
 
 				return result;
 			}
@@ -215,29 +213,24 @@ public final class ProductModel extends AbstractTableModel implements
 	}
 
 	private void loadFromFile(String fileName) throws IOException {
-		FileReader fstream = new FileReader(fileName);
-		BufferedReader in = new BufferedReader(fstream);
-		String line;
-		ProductInfo pi;
+		try (FileReader fstream = new FileReader(fileName); BufferedReader in = new BufferedReader(fstream)) {
+			String line = in.readLine();
 
-		line = in.readLine();
+			productInfo.clear();
 
-		productInfo.clear();
-		while (line != null) {
-			String data[] = line.split("\t", 4);
+			while (line != null) {
+				String data[] = line.split("\t", 4);
+				ProductInfo pi = new ProductInfo();
 
-			pi = new ProductInfo();
+				pi.setName(data[0]);
+				pi.setUrl(data[1]);
+				pi.setPrice(data[2], Float.parseFloat(data[3]));
 
-			pi.setName(data[0]);
-			pi.setUrl(data[1]);
-			pi.setPrice(data[2], Float.parseFloat(data[3]));
+				productInfo.add(pi);
 
-			productInfo.add(pi);
-
-			line = in.readLine();
+				line = in.readLine();
+			}
 		}
-
-		in.close();
 
 		fireTableRowsInserted(0, productInfo.size() - 1);
 	}
