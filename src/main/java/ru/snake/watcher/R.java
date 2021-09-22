@@ -2,11 +2,11 @@ package ru.snake.watcher;
 
 public final class R {
 
-	public static final String PRICE_COLUMN = "table.CBRTBL > tbody > tr:nth-child(n+2) > td:nth-child(5)";
-	public static final String COUNT_COLUMN = "table.CBRTBL > tbody > tr:nth-child(n+2) > td:nth-child(3)";
-	public static final String NAME_COLUMN = "table.CBRTBL > tbody > tr:nth-child(n+2) > td:nth-child(2)";
+	public static final String PRICE_COLUMN = "table.data > tbody > tr:nth-child(n+2) > td:nth-child(5)";
+	public static final String COUNT_COLUMN = "table.data > tbody > tr:nth-child(n+2) > td:nth-child(3)";
+	public static final String NAME_COLUMN = "table.data > tbody > tr:nth-child(n+2) > td:nth-child(2)";
 
-	public static final String PRICE_PAGE = "http://www.cbr.ru/currency_base/daily.aspx?date_req=%s";
+	public static final String PRICE_PAGE = "https://www.cbr.ru/currency_base/daily/";
 
 	public static final String SEPARATORS = ",.";
 

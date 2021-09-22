@@ -1,7 +1,6 @@
 package ru.snake.watcher.cache;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,14 +33,10 @@ public final class PriceCache {
 		}
 
 		if (needUpdate) {
-			String pageUrl;
 			Document document;
-			SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-
-			pageUrl = String.format(R.PRICE_PAGE, df.format(new Date()));
 
 			try {
-				document = Jsoup.connect(pageUrl).timeout(R.HTTP_TIMEOUT).get();
+				document = Jsoup.connect(R.PRICE_PAGE).timeout(R.HTTP_TIMEOUT).get();
 			} catch (IOException e) {
 				return 0.0f;
 			}
@@ -52,8 +47,7 @@ public final class PriceCache {
 
 			if (names.size() == mult.size() && names.size() == divid.size()) {
 				for (int i = 0; i < names.size(); i++) {
-					String name = names.get(i).text()
-							.replaceAll(R.NOT_LETTER_REGEX, "");
+					String name = names.get(i).text().replaceAll(R.NOT_LETTER_REGEX, "");
 
 					float multiplier = Util.parseFloat(mult.get(i).text());
 					float divider = Util.parseFloat(divid.get(i).text());
